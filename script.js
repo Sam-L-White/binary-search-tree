@@ -112,6 +112,21 @@ const tree = (array) => {
         return outputArray
     }
 
+    const nodeHeight = (currentRoot = root) => {
+        if(currentRoot === null){
+            return 0
+        } else {
+            let leftHeight = nodeHeight(currentRoot.left)
+            let rightHeight = nodeHeight(currentRoot.right)
+            if (leftHeight > rightHeight){
+                return leftHeight + 1;
+            } else {
+                return rightHeight + 1;
+            }
+        }
+        
+    }
+
     function minValue(root){
     let minv = root.data;
         while (root.left != null)
@@ -122,7 +137,7 @@ const tree = (array) => {
         return minv;
     }
 
-    return{get root(){return root}, insertNode, deleteNode, find, levelOrder, preOrder, inOrder, postOrder}
+    return{get root(){return root}, insertNode, deleteNode, find, levelOrder, preOrder, inOrder, postOrder, nodeHeight}
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -140,9 +155,7 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
 
 let array = [1,2,4,5,9,10,14]
 let treeResult = (tree(array))
+let nodeResult = treeResult.find(5)
 
 prettyPrint(treeResult.root)
-console.log(treeResult.levelOrder())
-console.log(treeResult.preOrder())
-console.log(treeResult.inOrder())
-console.log(treeResult.postOrder())
+console.log(treeResult.nodeHeight(nodeResult))
