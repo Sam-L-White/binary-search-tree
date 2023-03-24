@@ -145,14 +145,20 @@ const tree = (array) => {
 
     const isBalanced = (currentRoot = root) => {
         
-        const leftHeight = height(currentRoot.left);
-        const rightHeight = height(currentRoot.right);
+        const leftHeight = nodeHeight(currentRoot.left);
+        const rightHeight = nodeHeight(currentRoot.right);
         const difference = Math.abs(leftHeight - rightHeight);
         if(difference > 1){
             return false
         } else {
             return true
         }
+    }
+
+    const rebalance = (currentRoot = root) => {
+        let newArray = levelOrder(currentRoot)
+        newArray = newArray.sort(function(a, b){return a - b})
+        return root = buildTree(newArray, 0, newArray.length - 1)
     }
 
     function minValue(root){
@@ -165,7 +171,7 @@ const tree = (array) => {
         return minv;
     }
 
-    return{get root(){return root}, insertNode, deleteNode, find, levelOrder, preOrder, inOrder, postOrder, nodeHeight, nodeDepth}
+    return{get root(){return root}, insertNode, deleteNode, find, levelOrder, preOrder, inOrder, postOrder, nodeHeight, nodeDepth, isBalanced, rebalance}
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -187,3 +193,4 @@ let nodeResult = treeResult.find(34)
 
 prettyPrint(treeResult.root)
 console.log(treeResult.nodeDepth(nodeResult))
+console.log(treeResult.isBalanced())
