@@ -64,6 +64,24 @@ const tree = (array) => {
         }
     }
 
+    const levelOrder = (currentRoot = root, outputArray = [], queue = []) => {
+        if(currentRoot === null){
+            return
+        }
+        outputArray.push(currentRoot.data)
+        queue.push(currentRoot.left)
+        queue.push(currentRoot.right)
+
+        while(queue.length > 0){
+            const newRoot = queue[0]
+            queue.shift();
+            levelOrder(newRoot, outputArray, queue)
+        }
+
+        return outputArray
+        
+    }
+
     function minValue(root){
     let minv = root.data;
         while (root.left != null)
@@ -74,7 +92,7 @@ const tree = (array) => {
         return minv;
     }
 
-    return{get root(){return root}, insertNode, deleteNode, find}
+    return{get root(){return root}, insertNode, deleteNode, find, levelOrder}
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -94,3 +112,4 @@ let array = [1,2,4,5,9,10,14]
 let treeResult = (tree(array))
 
 console.log(treeResult.find(44))
+console.log(treeResult.levelOrder())
