@@ -124,7 +124,18 @@ const tree = (array) => {
                 return rightHeight + 1;
             }
         }
-        
+    }
+
+    const nodeDepth = (inputNode, currentRoot = root, counter = 0) => {
+        if(currentRoot === null || inputNode.data === currentRoot.data){
+            return counter
+        } else if (inputNode.data < currentRoot.data){
+            counter++
+            return nodeDepth(inputNode, currentRoot.left, counter)
+        } else {
+            counter++
+            return nodeDepth(inputNode, currentRoot.right, counter)
+        }
     }
 
     function minValue(root){
@@ -137,7 +148,7 @@ const tree = (array) => {
         return minv;
     }
 
-    return{get root(){return root}, insertNode, deleteNode, find, levelOrder, preOrder, inOrder, postOrder, nodeHeight}
+    return{get root(){return root}, insertNode, deleteNode, find, levelOrder, preOrder, inOrder, postOrder, nodeHeight, nodeDepth}
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -153,9 +164,9 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
     }
 }
 
-let array = [1,2,4,5,9,10,14]
+let array = [1,2,4,5,9,10,14,18,20,34,50,80]
 let treeResult = (tree(array))
-let nodeResult = treeResult.find(5)
+let nodeResult = treeResult.find(34)
 
 prettyPrint(treeResult.root)
-console.log(treeResult.nodeHeight(nodeResult))
+console.log(treeResult.nodeDepth(nodeResult))
