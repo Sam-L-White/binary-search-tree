@@ -187,10 +187,23 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
     }
 }
 
-let array = [1,2,102,5,802,10,14,18,20,34,50,10,102,50,80]
-let treeResult = (tree(array))
-let nodeResult = treeResult.find(34)
-
-prettyPrint(treeResult.root)
-console.log(treeResult.nodeDepth(nodeResult))
-console.log(treeResult.isBalanced())
+const driver = (() => {
+    const array = Array(10).fill().map(() => Math.floor(100 * Math.random()))
+    let treeResult = (tree(array))
+    console.log(treeResult.isBalanced())
+    console.log(treeResult.levelOrder())
+    console.log(treeResult.preOrder())
+    console.log(treeResult.inOrder())
+    console.log(treeResult.postOrder())
+    treeResult.insertNode(105)
+    treeResult.insertNode(110)
+    treeResult.insertNode(120)
+    treeResult.insertNode(130)
+    console.log(treeResult.isBalanced())
+    treeResult.rebalance()
+    console.log(treeResult.isBalanced())
+    console.log(treeResult.levelOrder())
+    console.log(treeResult.preOrder())
+    console.log(treeResult.inOrder())
+    console.log(treeResult.postOrder())
+})()
