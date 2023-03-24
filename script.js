@@ -15,6 +15,12 @@ function buildTree(array, startIndex, endIndex){
 
 const tree = (array) => {
 
+    console.log(array)
+
+    array = array.sort(function(a, b){return a - b})
+
+    console.log(array)
+
     let root = buildTree(array, 0, array.length - 1)
 
     const insertNode = (input, currentRoot = root) => {
@@ -138,6 +144,18 @@ const tree = (array) => {
         }
     }
 
+    const isBalanced = (currentRoot = root) => {
+        
+        const leftHeight = height(currentRoot.left);
+        const rightHeight = height(currentRoot.right);
+        const difference = Math.abs(leftHeight - rightHeight);
+        if(difference > 1){
+            return false
+        } else {
+            return true
+        }
+    }
+
     function minValue(root){
     let minv = root.data;
         while (root.left != null)
@@ -164,7 +182,7 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
     }
 }
 
-let array = [1,2,4,5,9,10,14,18,20,34,50,80]
+let array = [1,2,102,5,802,10,14,18,20,34,50,80]
 let treeResult = (tree(array))
 let nodeResult = treeResult.find(34)
 
