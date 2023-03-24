@@ -54,6 +54,16 @@ const tree = (array) => {
         return currentRoot
     }
 
+    const find = (input, currentRoot = root) => {
+        if(currentRoot === null || input === currentRoot.data){
+            return currentRoot
+        } else if (input < currentRoot.data){
+            return find(input, currentRoot.left)
+        } else {
+            return find(input, currentRoot.right)
+        }
+    }
+
     function minValue(root){
     let minv = root.data;
         while (root.left != null)
@@ -64,7 +74,7 @@ const tree = (array) => {
         return minv;
     }
 
-    return{get root(){return root}, insertNode, deleteNode}
+    return{get root(){return root}, insertNode, deleteNode, find}
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -83,10 +93,4 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
 let array = [1,2,4,5,9,10,14]
 let treeResult = (tree(array))
 
-prettyPrint(treeResult.root)
-treeResult.deleteNode(14)
-prettyPrint(treeResult.root)
-treeResult.deleteNode(9)
-prettyPrint(treeResult.root)
-treeResult.deleteNode(10)
-prettyPrint(treeResult.root)
+console.log(treeResult.find(44))
