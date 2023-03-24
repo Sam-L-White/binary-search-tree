@@ -17,22 +17,54 @@ const tree = (array) => {
 
     let root = buildTree(array, 0, array.length - 1)
 
-    const insert = (input, currentRoot = root) => {
+    const insertNode = (input, currentRoot = root) => {
         if(input < currentRoot.data){
             if(currentRoot.left !== null){
-                insert(input, currentRoot.left)
+                insertNode(input, currentRoot.left)
             } else {
                 currentRoot.left = node(input)
             } 
         } else {
             if(currentRoot.right !== null){
-                insert(input, currentRoot.right)
+                insertNode(input, currentRoot.right)
             } else {
                 currentRoot.right = node(input)
             } 
         }
     }
-    return{get root(){return root}, insert}
+
+    const deleteNode = (input, currentRoot = root) => {
+        if(currentRoot === null){
+            return currentRoot
+        }
+        if(input < currentRoot.data){
+            currentRoot.left = deleteNode(input, currentRoot.left)
+        } else if(input > currentRoot.data){
+            currentRoot.right = deleteNode(input, currentRoot.right)
+        } else {
+            if(currentRoot.left == null){
+                return currentRoot.right
+            } else if(currentRoot.right == null){
+                return currentRoot.left
+            } else {
+                currentRoot.data = minValue(currentRoot.right)
+                currentRoot.right = deleteNode(currentRoot.right, currentRoot.data)
+            }
+        }
+        return currentRoot
+    }
+
+    function minValue(root){
+    let minv = root.data;
+        while (root.left != null)
+        {
+            minv = root.left.data;
+            root = root.left;
+        }
+        return minv;
+    }
+
+    return{get root(){return root}, insertNode, deleteNode}
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -52,6 +84,9 @@ let array = [1,2,4,5,9,10,14]
 let treeResult = (tree(array))
 
 prettyPrint(treeResult.root)
-treeResult.insert(3)
-treeResult.insert(11)
+treeResult.deleteNode(14)
+prettyPrint(treeResult.root)
+treeResult.deleteNode(9)
+prettyPrint(treeResult.root)
+treeResult.deleteNode(10)
 prettyPrint(treeResult.root)
