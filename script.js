@@ -15,13 +15,12 @@ function buildTree(array, startIndex, endIndex){
 
 const tree = (array) => {
 
-    console.log(array)
 
     array = array.sort(function(a, b){return a - b})
+    let uniqueArray = [...new Set(array)]
 
-    console.log(array)
 
-    let root = buildTree(array, 0, array.length - 1)
+    let root = buildTree(uniqueArray, 0, uniqueArray.length - 1)
 
     const insertNode = (input, currentRoot = root) => {
         if(input < currentRoot.data){
@@ -182,7 +181,7 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
     }
 }
 
-let array = [1,2,102,5,802,10,14,18,20,34,50,80]
+let array = [1,2,102,5,802,10,14,18,20,34,50,10,102,50,80]
 let treeResult = (tree(array))
 let nodeResult = treeResult.find(34)
 
